@@ -13,9 +13,14 @@ function changeAccountById({id, name, budget}){
     return db('accounts').where({id}).update({name, budget})
 
 }
+function removeAccount({id}){
+    return db('accounts').where({id}).del();
+}
+
 module.exports={
     getAllAccounts,
     getAccountById,
     addNewAccount,
     changeAccountById,
+    removeAccount
 }

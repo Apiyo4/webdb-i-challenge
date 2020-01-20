@@ -1,11 +1,11 @@
 const express = require('express');
-const {getAllAccounts, getAccountById, addNewAccount, changeAccountById} = require('./account-model');
+const {getAllAccounts, getAccountById, addNewAccount, changeAccountById, removeAccount} = require('./account-model');
 const router = express.Router();
 
 router.get('/', async(req,res)=>{
     try{
         const allAccounts = await getAllAccounts();
-        res.status(200).json(allAccounts);
+        res.status(200).json(`${allAccounts} account was deleted` );
     }
     catch(e){
         console.log(e);
@@ -35,8 +35,18 @@ router.put('/:id', async(req,res)=>{
     try{
         const {id} = req.params;
         const { name, budget} = req.body;
-        const stuff = await changeAccountById({id, name, budget});
-        res.status(200).json(stuff)
+        const updatedAccount = await changeAccountById({id, name, budget});
+        res.status(200).json(updatedAccount);
+    }
+    catch(e){
+        console.log(e);
+    }
+})
+router.delete('/:id', async(req,res)=>{
+    try{
+        const {id} = req.params;
+    const stuff = await removeAccount({id});
+    res.status(200).json(stuff);
     }
     catch(e){
         console.log(e);
