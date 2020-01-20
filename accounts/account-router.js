@@ -1,5 +1,5 @@
 const express = require('express');
-const {getAllAccounts} = require('./account-model');
+const {getAllAccounts, getAccountById} = require('./account-model');
 const router = express.Router();
 
 router.get('/', async(req,res)=>{
@@ -11,5 +11,15 @@ router.get('/', async(req,res)=>{
         console.log(e);
     }
 
+})
+router.get('/:id', async(req,res)=>{
+    try{
+        const {id} = req.params;
+        const account = await getAccountById(id);
+        res.status(200).json(account);
+    }
+    catch(e){
+        console.log(e);
+    }
 })
 module.exports= router;
